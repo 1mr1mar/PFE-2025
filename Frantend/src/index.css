@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
+
+html {
+    scroll-behavior: smooth;
+  }
+
+@theme{
+  --color-green-ziti:#0B1315;
+  --color-yellow-gold:#C9AB81;
+  --color-yellow-gold1:#715B3E;
+  --color-green-khzy:#0F1D22;
+}
+@font-face {
+  font-family: 'font1';
+  src: url('./assets/fonts/font1.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "Josefin Sans", sans-serif;
+}
+.jdid{
+  font-family: "Miniver", cursive;
+  font-weight: 400;
+}
+/* إضافة بعض الأنماط الخاصة بشريط التمرير */
+.slider {
+  -webkit-appearance: none; /* إزالة الشكل الافتراضي */
+  width: 100%; /* تحديد العرض الكامل */
+  height: 4px; /* تحديد الارتفاع */
+  background:#715B3E; /* خلفية الشريط */
+  /*outline: none; /* إزالة الحدود */
+ 
+  transition: background 0.3s ease; /* تأثير التدرج عند التفاعل */
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* إزالة الشكل الافتراضي للمؤشر */
+  appearance: none; /* إزالة الشكل الافتراضي */
+  width: 5px; /* عرض المؤشر */
+  height: 20px; /* ارتفاع المؤشر */
+  background: #C9AB81; /* لون المؤشر */
+  /*border-radius: 50%; /* جعل المؤشر دائري */
+  cursor: pointer; /* تغيير شكل المؤشر عند التمرير */
+  transition: background 0.3s ease; /* تأثير عند التفاعل */
+}
+
+.slider::-webkit-slider-thumb:hover {
+  background: #ff9900; /* تغيير اللون عند التمرير */
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #ffcc00;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb:hover {
+  background: #ff9900;
+}
