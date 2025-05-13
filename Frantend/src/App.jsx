@@ -27,6 +27,7 @@ import Bookings from "./components/admin/Bookings";
 import Login from "./components/Login";
 import ReviewssPage from "./components/admin/ReviewsPage";
 import Sittings from "./components/admin/Sittings";
+import ThemeSwitcher from "./components/ThemeSwitcher";
 
 import Chatbot from "./components/Chatbot";
 
@@ -55,44 +56,48 @@ function App() {
 
   return (
     <CustomerContext.Provider value={customerId}>
-    <Router>
-      <Routes>
-        {/* Pages */}
-        <Route path="/" element={<Landing />} />
-        <Route path="/menu" element={<MainMenu />} />
-        <Route path="/book" element={<Book />} />
-        <Route path="/chefs" element={<Chefs />} />
-        <Route path="/add-review" element={<AddReviewForm />} />
-        <Route path="/reviews" element={<ReviewsPage />} />
-        <Route path="/product/:id" element={<MealDetails />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/checkout" element={<Checkout />} />
-        
+      <Router>
+        <div className="min-h-screen">
+          <Routes>
+            {/* Pages */}
+            <Route path="/" element={<Landing />} />
+            <Route path="/menu" element={<MainMenu />} />
+            <Route path="/book" element={<Book />} />
+            <Route path="/chefs" element={<Chefs />} />
+            <Route path="/add-review" element={<AddReviewForm />} />
+            <Route path="/reviews" element={<ReviewsPage />} />
+            <Route path="/product/:id" element={<MealDetails />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<Checkout />} />
+            
+            
 
-        {/* Login */}
-        <Route path="/admin/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+            {/* Login */}
+            <Route path="/admin/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
 
-        {/* Admin Dashboard */}
-        <Route
-          path="/admin"
-          element={
-            isLoggedIn ? <DashboardLayout /> : <Navigate to="/admin/login" />
-          }
-        >
-          <Route index element={<DashboardHome />} />
-          <Route path="chefs" element={<ChefsPage />} />
-          <Route path="menu" element={<AdminMenu />} />
-          <Route path="orders" element={<AdminOrders />} />
-          <Route path="bookings" element={<Bookings />} />
-          <Route path="reviews" element={<ReviewssPage />} />
-          <Route path="sittings" element={<Sittings />} />
-        </Route>
-      </Routes>
-      <ToastContainer position="top-right" autoClose={3000} />
-      <div className="z-5000">
-        <Chatbot />
-      </div>
-    </Router>
+            {/* Admin Dashboard */}
+            <Route
+              path="/admin"
+              element={
+                isLoggedIn ? <DashboardLayout /> : <Navigate to="/admin/login" />
+              }
+            >
+              <Route index element={<DashboardHome />} />
+              <Route path="chefs" element={<ChefsPage />} />
+              <Route path="menu" element={<AdminMenu />} />
+              <Route path="orders" element={<AdminOrders />} />
+              <Route path="bookings" element={<Bookings />} />
+              <Route path="reviews" element={<ReviewssPage />} />
+              <Route path="sittings" element={<Sittings />} />
+            </Route>
+          </Routes>
+          <ThemeSwitcher />
+          <ToastContainer />
+          <div className="z-5000">
+            <Chatbot />
+          </div>
+        </div>
+      </Router>
     </CustomerContext.Provider>
   );  
 }

@@ -68,3 +68,25 @@ body {
 .slider::-moz-range-thumb:hover {
   background: #ff9900;
 }
+
+
+.black-gold-theme {
+  --bg-theme: #000000;
+  --bg1-theme: #2c3233;
+  --line-theme: #C9A54E;
+  --text-theme: #F5E3C1;
+}
+
+.white-gold-theme {
+  --bg-theme: #ffffff;
+  --bg1-theme: #c7bba4;
+  --line-theme: #C9A54E;
+  --text-theme: #000000;
+}
+
+.green-gold-theme {
+  --bg-theme: #0B1315;
+  --bg1-theme: #1A2C31;
+  --line-theme: #C9A54E;
+  --text-theme: #F5E3C1;
+}
