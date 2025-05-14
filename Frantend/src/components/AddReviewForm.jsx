@@ -1,42 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion"; 
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function AddReviewForm({ onSubmit }) {
+  const { currentTheme, themes } = useTheme();
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [rating, setRating] = useState(5);
-
-  useEffect(() => {
-    // Log the current theme variables when component mounts or updates
-    console.log('AddReviewForm - Current theme variables:', {
-      bgTheme: getComputedStyle(document.documentElement).getPropertyValue('--bg-theme'),
-      bg1Theme: getComputedStyle(document.documentElement).getPropertyValue('--bg1-theme'),
-      lineTheme: getComputedStyle(document.documentElement).getPropertyValue('--line-theme'),
-      textTheme: getComputedStyle(document.documentElement).getPropertyValue('--text-theme')
-    });
-
-    // Add a mutation observer to watch for theme changes
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-          console.log('Theme class changed:', document.documentElement.className);
-          console.log('New theme variables:', {
-            bgTheme: getComputedStyle(document.documentElement).getPropertyValue('--bg-theme'),
-            bg1Theme: getComputedStyle(document.documentElement).getPropertyValue('--bg1-theme'),
-            lineTheme: getComputedStyle(document.documentElement).getPropertyValue('--line-theme'),
-            textTheme: getComputedStyle(document.documentElement).getPropertyValue('--text-theme')
-          });
-        }
-      });
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class']
-    });
-
-    return () => observer.disconnect();
-  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,16 +33,17 @@ export default function AddReviewForm({ onSubmit }) {
       transition={{ duration: 1 }} 
     >
       <motion.h3
-        className="text-3xl jdid font-semibold text-[var(--line-theme)] mb-6 text-center"
+        className="text-3xl jdid font-semibold text-[var(--text-theme)] mb-6 text-center"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.2 }} 
       >
         Add Your Review
       </motion.h3>
+
       <motion.form
         onSubmit={handleSubmit}
-        className="bg-[var(--bg1-theme)] p-6 border-2 border-[var(--line-theme)] rounded-lg"
+        className="bg-[var(--bg-theme)] p-6 border-2 border-[var(--line1-theme)] rounded-lg"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.3 }} 
@@ -83,13 +54,13 @@ export default function AddReviewForm({ onSubmit }) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <label htmlFor="name" className="block text-[var(--line-theme)] text-lg">Your Name</label>
+          <label htmlFor="name" className="block text-[var(--text-theme)] text-lg">Your Name</label>
           <motion.input
             type="text"
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full p-4 border-2 border-[var(--line-theme)] bg-transparent text-[var(--text-theme)] placeholder-[var(--line-theme)]/50 text-lg mt-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--line-theme)]"
+            className="w-full p-4 border-2 border-[var(--line1-theme)] bg-[var(--bg-theme)] text-[var(--text-theme)] placeholder-[var(--line-theme)]/50 text-lg mt-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--line-theme)]"
             placeholder="Enter your name"
             whileFocus={{ scale: 1.05 }} 
           />
@@ -101,12 +72,12 @@ export default function AddReviewForm({ onSubmit }) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }} 
         >
-          <label htmlFor="message" className="block text-[var(--line-theme)] text-lg">Your Message</label>
+          <label htmlFor="message" className="block text-[var(--text-theme)] text-lg">Your Message</label>
           <motion.textarea
             id="message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="w-full p-4 border-2 border-[var(--line-theme)] bg-transparent text-[var(--text-theme)] placeholder-[var(--line-theme)]/50 text-lg mt-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--line-theme)]"
+            className="w-full p-4 border-2 border-[var(--line1-theme)] bg-[var(--bg-theme)] text-[var(--text-theme)] placeholder-[var(--line-theme)]/50 text-lg mt-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--line-theme)]"
             placeholder="Write your review"
             whileFocus={{ scale: 1.05 }} 
           />
@@ -118,7 +89,7 @@ export default function AddReviewForm({ onSubmit }) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }} 
         >
-          <label htmlFor="rating" className="block text-[var(--line-theme)] text-lg">Rating</label>
+          <label htmlFor="rating" className="block text-[var(--text-theme)] text-lg">Rating</label>
           <div className="flex items-center">
             {[...Array(5)].map((_, index) => (
               <svg
@@ -145,7 +116,7 @@ export default function AddReviewForm({ onSubmit }) {
 
         <motion.button
           type="submit"
-          className="w-full border-2 border-[var(--line-theme)] bg-transparent text-[var(--line-theme)] py-3 rounded-lg hover:bg-[var(--line-theme)] hover:text-[var(--bg-theme)] transition-all duration-300 font-medium"
+          className="w-full border-2 border-[var(--line-theme)] bg-[var(--bg-theme)] text-[var(--line-theme)] py-3 rounded-lg hover:bg-[var(--line-theme)] hover:text-[var(--bg-theme)] transition-all duration-300 font-medium"
           whileHover={{ scale: 1.05 }} 
         >
           Submit Review

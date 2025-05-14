@@ -19,6 +19,12 @@ export default {
             'gold-khzy-dark': '#C9A54E',
           },
       extend: {
+        backgroundColor: {
+          'theme': 'var(--bg-theme)',
+        },
+        textColor: {
+          'theme': 'var(--text-theme)',
+        },
         fontFamily: {
             'roboto': ['Roboto', 'sans-serif'],
             custom: ['font1', 'sans-serif'],

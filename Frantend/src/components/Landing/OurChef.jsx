@@ -5,16 +5,17 @@ import Svg from "./svgn2";
 import SvgI from "./svgn4";
 import { Link } from "react-router-dom";
 import { ArrowRight, Award, Users, Clock } from "lucide-react";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const ChefStats = ({ icon: Icon, value, label }) => (
   <motion.div
-    className="flex flex-col items-center p-4 bg-green-khzy/30 backdrop-blur-sm rounded-lg border border-yellow-gold/20"
+    className="flex flex-col items-center p-4 bg-[var(--bg1-theme)]/30 backdrop-blur-sm rounded-lg border border-[var(--line-theme)]/20"
     whileHover={{ scale: 1.05, backgroundColor: "rgba(154, 125, 87, 0.1)" }}
     transition={{ duration: 0.3 }}
   >
-    <Icon className="w-8 h-8 text-yellow-gold mb-2" />
-    <div className="text-2xl font-bold text-yellow-gold mb-1">{value}</div>
-    <div className="text-sm text-gray-300">{label}</div>
+    <Icon className="w-8 h-8 text-[var(--text-theme)] mb-2" />
+    <div className="text-2xl font-bold text-[var(--text-theme)] mb-1">{value}</div>
+    <div className="text-sm text-[var(--text1-theme)]">{label}</div>
   </motion.div>
 );
 
@@ -46,16 +47,16 @@ const OurChef = () => {
     <section
       id="chef"
       ref={ref}
-      className="relative min-h-screen z-22 flex flex-col items-center justify-center bg-green-khzy text-yellow-gold px-6 py-20"
+      className="relative min-h-screen z-22 flex flex-col items-center justify-center bg-[var(--bg-theme)] text-[var(--text-theme)] px-6 py-20"
     >
-      <div className="absolute z-10 top-0 left-[calc(4/18*100%)] h-full w-[1px] bg-yellow-gold1 opacity-50"></div>
-      <div className="absolute z-10 top-0 left-[calc(8/20*100%)] h-full w-[1px] bg-yellow-gold1 opacity-50"></div>
-      <div className="absolute z-10 top-0 right-[calc(8/20*100%)] h-full w-[1px] bg-yellow-gold1 opacity-50"></div>
-      <div className="absolute z-10 top-0 right-[calc(4/18*100%)] h-full w-[1px] bg-yellow-gold1 opacity-50"></div>
+      <div className="absolute z-10 top-0 left-[calc(4/18*100%)] h-full w-[1px] bg-[var(--line1-theme)]/50"></div>
+      <div className="absolute z-10 top-0 left-[calc(8/20*100%)] h-full w-[1px] bg-[var(--line1-theme)]/50"></div>
+      <div className="absolute z-10 top-0 right-[calc(8/20*100%)] h-full w-[1px] bg-[var(--line1-theme)]/50"></div>
+      <div className="absolute z-10 top-0 right-[calc(4/18*100%)] h-full w-[1px] bg-[var(--line1-theme)]/50"></div>
 
       {/* Header */}
       <motion.p
-        className="jdid text-lg uppercase z-20 text-yellow-gold tracking-wider mb-2"
+        className="jdid text-lg uppercase z-20 text-[var(--text-theme)] tracking-wider mb-2"
         initial={{ opacity: 0, y: 50 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
@@ -101,7 +102,7 @@ const OurChef = () => {
             alt="Chef at Work"
             className="w-full md:w-[400px] h-[500px] object-cover rounded-lg shadow-lg transform transition-transform duration-500 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-theme)]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
         </motion.div>
 
         {/* Center Text */}
@@ -111,7 +112,7 @@ const OurChef = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
         >
-          <p className="text-lg text-gray-300 max-w-xl leading-relaxed mb-8">
+          <p className="text-lg text-[var(--text1-theme)] max-w-xl leading-relaxed mb-8">
             With over two decades of culinary expertise, our head chef brings a
             unique blend of traditional techniques and innovative approaches to
             every dish. Their passion for creating memorable dining experiences
@@ -120,9 +121,9 @@ const OurChef = () => {
           </p>
           <Link to="/chefs">
             <motion.button
-              whileHover={{ scale: 1.05, backgroundColor: "#ffcc00" }}
+              whileHover={{ scale: 1.05, backgroundColor: "var(--line-theme)" }}
               whileTap={{ scale: 0.95 }}
-              className="text-yellow-gold px-8 py-4 border-2 border-yellow-gold text-lg font-medium transition duration-300 shadow-lg hover:shadow-yellow-gold/30 flex items-center"
+              className="text-[var(--text-theme)] px-8 py-4 border-2 border-[var(--line-theme)] text-lg font-medium transition duration-300 shadow-lg hover:shadow-[var(--line-theme)]/30 flex items-center"
             >
               Meet Our Team
               <ArrowRight className="ml-2" size={20} />
@@ -142,7 +143,7 @@ const OurChef = () => {
             alt="Signature Dish"
             className="w-full md:w-[400px] h-[500px] object-cover rounded-lg shadow-lg transform transition-transform duration-500 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-theme)]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
         </motion.div>
       </div>
 

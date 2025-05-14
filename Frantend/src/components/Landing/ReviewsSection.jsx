@@ -5,6 +5,7 @@ import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Svg from "./svgn2";
 import { Quote } from "lucide-react";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const reviews = [
   {
@@ -40,17 +41,17 @@ const ReviewsSection = () => {
     <section
       id="reviews"
       ref={ref}
-      className="relative min-h-screen border-t-1 border-yellow-gold z-22 flex flex-col items-center justify-center bg-green-ziti text-yellow-gold px-6 py-20"
+      className="relative min-h-screen border-t-1 border-[var(--line-theme)] z-22 flex flex-col items-center justify-center bg-[var(--bg-theme)] text-[var(--text-theme)] px-6 py-20"
     >
       {/* Decorative lines */}
-      <div className="absolute z-10 top-0 left-[calc(4/18*100%)] h-full w-[1px] bg-yellow-gold1 opacity-50"></div>
-      <div className="absolute z-10 top-0 left-[calc(8/20*100%)] h-full w-[1px] bg-yellow-gold1 opacity-50"></div>
-      <div className="absolute z-10 top-0 right-[calc(8/20*100%)] h-full w-[1px] bg-yellow-gold1 opacity-50"></div>
-      <div className="absolute z-10 top-0 right-[calc(4/18*100%)] h-full w-[1px] bg-yellow-gold1 opacity-50"></div>
+      <div className="absolute z-10 top-0 left-[calc(4/18*100%)] h-full w-[1px] bg-[var(--line1-theme)]/50"></div>
+      <div className="absolute z-10 top-0 left-[calc(8/20*100%)] h-full w-[1px] bg-[var(--line1-theme)]/50"></div>
+      <div className="absolute z-10 top-0 right-[calc(8/20*100%)] h-full w-[1px] bg-[var(--line1-theme)]/50"></div>
+      <div className="absolute z-10 top-0 right-[calc(4/18*100%)] h-full w-[1px] bg-[var(--line1-theme)]/50"></div>
 
       {/* Header */}
       <motion.p
-        className="jdid text-lg uppercase z-20 text-yellow-gold tracking-wider mb-2"
+        className="jdid text-lg uppercase z-20 text-[var(--text-theme)] tracking-wider mb-2"
         initial={{ opacity: 0, y: 50 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
@@ -80,32 +81,32 @@ const ReviewsSection = () => {
           {reviews.map((review, index) => (
             <motion.div
               key={index}
-              className="bg-green-khzy/30 backdrop-blur-sm p-8 rounded-lg border border-yellow-gold/20 h-full"
+              className="bg-[var(--bg1-theme)]/30 backdrop-blur-sm p-8 rounded-lg border border-[var(--line-theme)]/20 h-full"
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.2 }}
               whileHover={{ scale: 1.02, backgroundColor: "rgba(154, 125, 87, 0.1)" }}
             >
-              <Quote className="w-8 h-8 text-yellow-gold mb-4" />
+              <Quote className="w-8 h-8 text-[var(--text-theme)] mb-4" />
               <div className="flex mb-4">
                 {[...Array(review.rating)].map((_, i) => (
-                  <FaStar key={i} className="text-yellow-gold fill-yellow-gold" />
+                  <FaStar key={i} className="text-[var(--text-theme)] fill-[var(--text-theme)]" />
                 ))}
               </div>
-              <p className="text-gray-300 mb-6 leading-relaxed italic">
+              <p className="text-[var(--text1-theme)] mb-6 leading-relaxed italic">
                 "{review.comment}"
               </p>
               <div className="flex items-center">
                 <img
                   src={review.avatar}
                   alt={review.name}
-                  className="w-12 h-12 rounded-full object-cover mr-4 border border-yellow-gold/30"
+                  className="w-12 h-12 rounded-full object-cover mr-4 border border-[var(--line-theme)]/30"
                 />
                 <div>
-                  <h3 className="text-yellow-gold font-semibold">
+                  <h3 className="text-[var(--text-theme)] font-semibold">
                     {review.name}
                   </h3>
-                  <p className="text-gray-400 text-sm">{review.role}</p>
+                  <p className="text-[var(--text1-theme)] text-sm">{review.role}</p>
                 </div>
               </div>
             </motion.div>
@@ -121,9 +122,9 @@ const ReviewsSection = () => {
         >
           <Link to="/reviews">
             <motion.button
-              whileHover={{ scale: 1.05, backgroundColor: "#ffcc00" }}
+              whileHover={{ scale: 1.05, backgroundColor: "var(--line-theme)" }}
               whileTap={{ scale: 0.95 }}
-              className="text-yellow-gold px-8 py-4 border-2 border-yellow-gold text-lg font-medium transition duration-300 shadow-lg hover:shadow-yellow-gold/30"
+              className="text-[var(--text-theme)] px-8 py-4 border-2 border-[var(--line-theme)] text-lg font-medium transition duration-300 shadow-lg hover:shadow-[var(--line-theme)]/30"
             >
               View All Reviews
             </motion.button>

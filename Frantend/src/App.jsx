@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 import Landing from "./components/LandingPage";
 import "./App.css";
@@ -55,50 +56,52 @@ function App() {
   }, []);
 
   return (
-    <CustomerContext.Provider value={customerId}>
-      <Router>
-        <div className="min-h-screen">
-          <Routes>
-            {/* Pages */}
-            <Route path="/" element={<Landing />} />
-            <Route path="/menu" element={<MainMenu />} />
-            <Route path="/book" element={<Book />} />
-            <Route path="/chefs" element={<Chefs />} />
-            <Route path="/add-review" element={<AddReviewForm />} />
-            <Route path="/reviews" element={<ReviewsPage />} />
-            <Route path="/product/:id" element={<MealDetails />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout" element={<Checkout />} />
-            
-            
+    <ThemeProvider>
+      <CustomerContext.Provider value={customerId}>
+        <Router>
+          <div className="min-h-screen">
+            <Routes>
+              {/* Pages */}
+              <Route path="/" element={<Landing />} />
+              <Route path="/menu" element={<MainMenu />} />
+              <Route path="/book" element={<Book />} />
+              <Route path="/chefs" element={<Chefs />} />
+              <Route path="/add-review" element={<AddReviewForm />} />
+              <Route path="/reviews" element={<ReviewsPage />} />
+              <Route path="/product/:id" element={<MealDetails />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<Checkout />} />
+              
+              
 
-            {/* Login */}
-            <Route path="/admin/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+              {/* Login */}
+              <Route path="/admin/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
 
-            {/* Admin Dashboard */}
-            <Route
-              path="/admin"
-              element={
-                isLoggedIn ? <DashboardLayout /> : <Navigate to="/admin/login" />
-              }
-            >
-              <Route index element={<DashboardHome />} />
-              <Route path="chefs" element={<ChefsPage />} />
-              <Route path="menu" element={<AdminMenu />} />
-              <Route path="orders" element={<AdminOrders />} />
-              <Route path="bookings" element={<Bookings />} />
-              <Route path="reviews" element={<ReviewssPage />} />
-              <Route path="sittings" element={<Sittings />} />
-            </Route>
-          </Routes>
-          <ThemeSwitcher />
-          <ToastContainer />
-          <div className="z-5000">
-            <Chatbot />
+              {/* Admin Dashboard */}
+              <Route
+                path="/admin"
+                element={
+                  isLoggedIn ? <DashboardLayout /> : <Navigate to="/admin/login" />
+                }
+              >
+                <Route index element={<DashboardHome />} />
+                <Route path="chefs" element={<ChefsPage />} />
+                <Route path="menu" element={<AdminMenu />} />
+                <Route path="orders" element={<AdminOrders />} />
+                <Route path="bookings" element={<Bookings />} />
+                <Route path="reviews" element={<ReviewssPage />} />
+                <Route path="sittings" element={<Sittings />} />
+              </Route>
+            </Routes>
+            <ThemeSwitcher />
+            <ToastContainer />
+            <div className="z-5000">
+              <Chatbot />
+            </div>
           </div>
-        </div>
-      </Router>
-    </CustomerContext.Provider>
+        </Router>
+      </CustomerContext.Provider>
+    </ThemeProvider>
   );  
 }
 

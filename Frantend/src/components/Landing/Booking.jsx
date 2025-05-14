@@ -6,6 +6,7 @@ import SvgI from "./svgn4";
 import { Calendar, Clock, Users, Phone, Mail, MapPin } from "lucide-react";
 import axiosConfig from "../../axiosConfig";
 import { toast } from "react-toastify";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const Booking = () => {
   const { ref, inView } = useInView({
@@ -79,17 +80,17 @@ const Booking = () => {
     <section
       id="booking"
       ref={ref}
-      className="relative min-h-screen z-22 flex flex-col items-center justify-center bg-green-ziti text-yellow-gold px-6 py-20"
+      className="relative min-h-screen z-22 flex flex-col items-center justify-center bg-[var(--bg-theme)] text-[var(--text-theme)] px-6 py-20"
     >
       {/* Decorative lines */}
-      <div className="absolute z-10 top-0 left-[calc(4/18*100%)] h-full w-[1px] bg-yellow-gold1 opacity-50"></div>
-      <div className="absolute z-10 top-0 left-[calc(8/20*100%)] h-full w-[1px] bg-yellow-gold1 opacity-50"></div>
-      <div className="absolute z-10 top-0 right-[calc(8/20*100%)] h-full w-[1px] bg-yellow-gold1 opacity-50"></div>
-      <div className="absolute z-10 top-0 right-[calc(4/18*100%)] h-full w-[1px] bg-yellow-gold1 opacity-50"></div>
+      <div className="absolute z-10 top-0 left-[calc(4/18*100%)] h-full w-[1px] bg-[var(--line1-theme)]/50"></div>
+      <div className="absolute z-10 top-0 left-[calc(8/20*100%)] h-full w-[1px] bg-[var(--line1-theme)]/50"></div>
+      <div className="absolute z-10 top-0 right-[calc(8/20*100%)] h-full w-[1px] bg-[var(--line1-theme)]/50"></div>
+      <div className="absolute z-10 top-0 right-[calc(4/18*100%)] h-full w-[1px] bg-[var(--line1-theme)]/50"></div>
 
       {/* Header */}
       <motion.p
-        className="jdid text-lg uppercase z-20 text-yellow-gold tracking-wider mb-2"
+        className="jdid text-lg uppercase z-20 text-[var(--text-theme)] tracking-wider mb-2"
         initial={{ opacity: 0, y: 50 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
@@ -119,13 +120,13 @@ const Booking = () => {
         {contactInfo.map((info, index) => (
           <motion.div
             key={index}
-            className="flex flex-col items-center p-6 bg-green-khzy/30 backdrop-blur-sm rounded-lg border border-yellow-gold/20"
+            className="flex flex-col items-center p-6 bg-[var(--bg1-theme)]/30 backdrop-blur-sm rounded-lg border border-[var(--line-theme)]/20"
             whileHover={{ scale: 1.05, backgroundColor: "rgba(154, 125, 87, 0.1)" }}
             transition={{ duration: 0.3 }}
           >
-            <info.icon className="w-8 h-8 text-yellow-gold mb-3" />
-            <h3 className="text-lg font-semibold text-yellow-gold mb-2">{info.title}</h3>
-            <p className="text-gray-300 text-center">{info.value}</p>
+            <info.icon className="w-8 h-8 text-[var(--text-theme)] mb-3" />
+            <h3 className="text-lg font-semibold text-[var(--text-theme)] mb-2">{info.title}</h3>
+            <p className="text-[var(--text1-theme)] text-center">{info.value}</p>
           </motion.div>
         ))}
       </motion.div>
@@ -137,73 +138,73 @@ const Booking = () => {
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1, ease: "easeOut", delay: 0.8 }}
       >
-        <form onSubmit={handleSubmit} className="bg-green-khzy/30 backdrop-blur-sm p-8 rounded-lg border border-yellow-gold/20">
+        <form onSubmit={handleSubmit} className="bg-[var(--bg1-theme)]/30 backdrop-blur-sm p-8 rounded-lg border border-[var(--line-theme)]/20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div>
-                <label className="block text-yellow-gold mb-2">Name</label>
+                <label className="block text-[var(--text-theme)] mb-2">Name</label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-black/30 border border-yellow-gold/30 rounded-lg text-white focus:outline-none focus:border-yellow-gold transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--bg-theme)]/30 border border-[var(--line-theme)]/30 rounded-lg text-[var(--text-theme)] focus:outline-none focus:border-[var(--line-theme)] transition-colors"
                   required
                 />
               </div>
               <div>
-                <label className="block text-yellow-gold mb-2">Email</label>
+                <label className="block text-[var(--text-theme)] mb-2">Email</label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-black/30 border border-yellow-gold/30 rounded-lg text-white focus:outline-none focus:border-yellow-gold transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--bg-theme)]/30 border border-[var(--line-theme)]/30 rounded-lg text-[var(--text-theme)] focus:outline-none focus:border-[var(--line-theme)] transition-colors"
                   required
                 />
               </div>
               <div>
-                <label className="block text-yellow-gold mb-2">Phone</label>
+                <label className="block text-[var(--text-theme)] mb-2">Phone</label>
                 <input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-black/30 border border-yellow-gold/30 rounded-lg text-white focus:outline-none focus:border-yellow-gold transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--bg-theme)]/30 border border-[var(--line-theme)]/30 rounded-lg text-[var(--text-theme)] focus:outline-none focus:border-[var(--line-theme)] transition-colors"
                   required
                 />
               </div>
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-yellow-gold mb-2">Date</label>
+                <label className="block text-[var(--text-theme)] mb-2">Date</label>
                 <input
                   type="date"
                   name="date"
                   value={formData.date}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-black/30 border border-yellow-gold/30 rounded-lg text-white focus:outline-none focus:border-yellow-gold transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--bg-theme)]/30 border border-[var(--line-theme)]/30 rounded-lg text-[var(--text-theme)] focus:outline-none focus:border-[var(--line-theme)] transition-colors"
                   required
                 />
               </div>
               <div>
-                <label className="block text-yellow-gold mb-2">Time</label>
+                <label className="block text-[var(--text-theme)] mb-2">Time</label>
                 <input
                   type="time"
                   name="time"
                   value={formData.time}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-black/30 border border-yellow-gold/30 rounded-lg text-white focus:outline-none focus:border-yellow-gold transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--bg-theme)]/30 border border-[var(--line-theme)]/30 rounded-lg text-[var(--text-theme)] focus:outline-none focus:border-[var(--line-theme)] transition-colors"
                   required
                 />
               </div>
               <div>
-                <label className="block text-yellow-gold mb-2">Number of Guests</label>
+                <label className="block text-[var(--text-theme)] mb-2">Number of Guests</label>
                 <select
                   name="guests"
                   value={formData.guests}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-black/30 border border-yellow-gold/30 rounded-lg text-white focus:outline-none focus:border-yellow-gold transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--bg-theme)]/30 border border-[var(--line-theme)]/30 rounded-lg text-[var(--text-theme)] focus:outline-none focus:border-[var(--line-theme)] transition-colors"
                   required
                 >
                   {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
@@ -216,21 +217,21 @@ const Booking = () => {
             </div>
           </div>
           <div className="mt-6">
-            <label className="block text-yellow-gold mb-2">Special Requests</label>
+            <label className="block text-[var(--text-theme)] mb-2">Special Requests</label>
             <textarea
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-black/30 border border-yellow-gold/30 rounded-lg text-white focus:outline-none focus:border-yellow-gold transition-colors h-32"
+              className="w-full px-4 py-3 bg-[var(--bg-theme)]/30 border border-[var(--line-theme)]/30 rounded-lg text-[var(--text-theme)] focus:outline-none focus:border-[var(--line-theme)] transition-colors h-32"
               placeholder="Any special requests or dietary requirements?"
             ></textarea>
           </div>
           <motion.button
             type="submit"
             disabled={isSubmitting}
-            whileHover={{ scale: 1.05, backgroundColor: "#ffcc00" }}
+            whileHover={{ scale: 1.05, backgroundColor: "var(--line-theme)" }}
             whileTap={{ scale: 0.95 }}
-            className={`w-full mt-8 text-yellow-gold px-8 py-4 border-2 border-yellow-gold text-lg font-medium transition duration-300 shadow-lg hover:shadow-yellow-gold/30 flex items-center justify-center ${
+            className={`w-full mt-8 text-[var(--text-theme)] px-8 py-4 border-2 border-[var(--line-theme)] text-lg font-medium transition duration-300 shadow-lg hover:shadow-[var(--line-theme)]/30 flex items-center justify-center ${
               isSubmitting ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >

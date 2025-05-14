@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer";
 import SvgIcon from "./costumsvg";
 import Svg from "./svgn2";
 import { Clock, Users, Award } from "lucide-react";
+import { useTheme } from "../../contexts/ThemeContext";
 import "../../App.css";
 
 const About = () => {
@@ -34,17 +35,17 @@ const About = () => {
     <section
       id="about"
       ref={ref}
-      className="relative min-h-screen z-22 flex flex-col items-center justify-center bg-green-ziti text-yellow-gold px-6 py-20"
+      className="relative min-h-screen z-22 flex flex-col items-center justify-center bg-[var(--bg-theme)] text-[var(--text-theme)] px-6 py-20"
     >
       {/* Decorative lines */}
-      <div className="absolute z-10 top-0 left-[calc(4/18*100%)] h-full w-[1px] bg-yellow-gold1 opacity-50"></div>
-      <div className="absolute z-10 top-0 left-[calc(8/20*100%)] h-full w-[1px] bg-yellow-gold1 opacity-50"></div>
-      <div className="absolute z-10 top-0 right-[calc(8/20*100%)] h-full w-[1px] bg-yellow-gold1 opacity-50"></div>
-      <div className="absolute z-10 top-0 right-[calc(4/18*100%)] h-full w-[1px] bg-yellow-gold1 opacity-50"></div>
+      <div className="absolute z-10 top-0 left-[calc(4/18*100%)] h-full w-[1px] bg-[var(--line1-theme)]/30"></div>
+      <div className="absolute z-10 top-0 left-[calc(8/20*100%)] h-full w-[1px] bg-[var(--line1-theme)]/30"></div>
+      <div className="absolute z-10 top-0 right-[calc(8/20*100%)] h-full w-[1px] bg-[var(--line1-theme)]/30"></div>
+      <div className="absolute z-10 top-0 right-[calc(4/18*100%)] h-full w-[1px] bg-[var(--line1-theme)]/30"></div>
 
       {/* Our Story */}
       <motion.p
-        className="jdid text-lg uppercase z-20 text-yellow-gold tracking-wider mb-2"
+        className="jdid text-lg uppercase z-20 text-[var(--text-theme)] tracking-wider mb-2"
         initial={{ opacity: 0, y: 50 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
@@ -67,7 +68,7 @@ const About = () => {
 
       {/* Description */}
       <motion.p
-        className="text-lg z-20 text-gray-300 max-w-3xl text-center mb-16 leading-relaxed"
+        className="text-lg z-20 text-[var(--text1-theme)] max-w-3xl text-center mb-16 leading-relaxed"
         initial={{ opacity: 0, y: 50 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1.5, ease: "easeOut", delay: 0.6 }}
@@ -88,18 +89,18 @@ const About = () => {
         {stats.map((stat, index) => (
           <motion.div
             key={index}
-            className="flex flex-col items-center p-6 bg-green-ziti/50 rounded-lg backdrop-blur-sm border border-yellow-gold/20"
+            className="flex flex-col items-center p-6 bg-[var(--bg1-theme)]/50 rounded-lg backdrop-blur-sm border border-[var(--line-theme)]/20"
             whileHover={{
               scale: 1.05,
-              backgroundColor: "rgba(154, 125, 87, 0.1)",
+              backgroundColor: "var(--bg1-theme)",
             }}
             transition={{ duration: 0.3 }}
           >
-            <div className="text-yellow-gold mb-4">{stat.icon}</div>
-            <div className="text-3xl font-bold text-yellow-gold mb-2">
+            <div className="text-[var(--text-theme)] mb-4">{stat.icon}</div>
+            <div className="text-3xl font-bold text-[var(--text-theme)] mb-2">
               {stat.value}
             </div>
-            <div className="text-gray-300 text-sm">{stat.label}</div>
+            <div className="text-[var(--text1-theme)] text-sm">{stat.label}</div>
           </motion.div>
         ))}
       </motion.div>
@@ -118,7 +119,7 @@ const About = () => {
             alt="Restaurant Interior"
             className="w-full h-[400px] sm:h-[450px] md:h-[500px] object-cover rounded-lg shadow-lg transform transition-transform duration-500 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-theme)]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
         </motion.div>
 
         {/* SVG Icon */}
@@ -144,7 +145,7 @@ const About = () => {
             alt="Delicious Dish"
             className="w-full h-[400px] sm:h-[450px] md:h-[500px] object-cover rounded-lg shadow-lg transform transition-transform duration-500 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-theme)]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
         </motion.div>
       </div>
     </section>
