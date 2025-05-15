@@ -123,7 +123,8 @@ CREATE TABLE `customers` (
   `phone` varchar(20) NOT NULL,
   `address` text DEFAULT NULL,
   `reservation_id` int(11) DEFAULT NULL,
-  `table_id` int(11) DEFAULT NULL
+  `table_id` int(11) DEFAULT NULL,
+  `uuid` varchar(36) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --

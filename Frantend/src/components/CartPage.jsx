@@ -38,7 +38,7 @@ const StripePaymentForm = ({ amount, onSuccess, onError }) => {
 
     try {
       // Create payment intent on your backend
-      const { data: clientSecret } = await axiosConfig.post("/api/payments/create-payment-intent", {
+      const { data: clientSecret } = await axiosConfig.post("/payments/create-payment-intent", {
         amount: Math.round(parseFloat(amount) * 100), // Convert to cents
       });
 
@@ -154,6 +154,7 @@ const CartPage = () => {
   });
   const [activeBooking, setActiveBooking] = useState(null);
   const [showStripeForm, setShowStripeForm] = useState(false);
+  const [showBookingPrompt, setShowBookingPrompt] = useState(false);
 
   useEffect(() => {
     const storedCart = getCartFromLocalStorage();
@@ -169,36 +170,34 @@ const CartPage = () => {
     }
 
     try {
-      // Fetch customer info from bookings
-      const bookingsResponse = await axiosConfig.get(`/api/bookings/customer/${customerId}`);
-      if (bookingsResponse.data && bookingsResponse.data.length > 0) {
-        const latestBooking = bookingsResponse.data[0];
+      // Fetch customer details including active reservation
+      const response = await axiosConfig.get(`/customer/${customerId}`);
+      const customerData = response.data;
+
+      // Update customer info
+      setCustomerInfo(prev => ({
+        ...prev,
+        name: customerData.name || "",
+        phone: customerData.phone || "",
+        email: customerData.email || ""
+      }));
+
+      // Check for active reservation
+      if (customerData.reservation_id) {
+        setActiveBooking({
+          id: customerData.reservation_id,
+          table_number: customerData.table_number,
+          booking_date: customerData.booking_date,
+          number_of_guests: customerData.number_of_guests
+        });
         setCustomerInfo(prev => ({
           ...prev,
-          name: latestBooking.name || "",
-          phone: latestBooking.phone || "",
-          email: latestBooking.email || ""
+          orderType: "table",
+          tableId: customerData.table_number
         }));
-
-        // Check if there's an active booking for today
-        const today = new Date().toISOString().split('T')[0];
-        const activeBooking = bookingsResponse.data.find(booking => 
-          booking.date === today && 
-          booking.status === "confirmed"
-        );
-
-        if (activeBooking) {
-          setActiveBooking(activeBooking);
-          setCustomerInfo(prev => ({
-            ...prev,
-            orderType: "table",
-            tableId: activeBooking.tableId
-          }));
-        }
       }
     } catch (error) {
       console.error("Error fetching customer info:", error);
-      // Don't show error toast for missing customer info
       if (error.response?.status !== 404) {
         toast.error("Failed to fetch customer information");
       }
@@ -228,8 +227,14 @@ const CartPage = () => {
   };
 
   const handleCheckout = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
     
+    // Check if customer has active reservation
+    if (!activeBooking && customerInfo.orderType === "table") {
+      setShowBookingPrompt(true);
+      return;
+    }
+
     if (customerInfo.paymentMethod === "card") {
       setShowStripeForm(true);
       return;
@@ -248,7 +253,7 @@ const CartPage = () => {
         },
         order_info: {
           type: customerInfo.orderType,
-          tableId: customerInfo.orderType === "table" ? customerInfo.tableId : null,
+          tableId: customerInfo.orderType === "table" ? activeBooking?.table_number : null,
           address: customerInfo.orderType === "delivery" ? customerInfo.address : null,
           notes: customerInfo.notes,
           paymentMethod: customerInfo.paymentMethod
@@ -256,12 +261,24 @@ const CartPage = () => {
       };
 
       const response = await axiosConfig.post("/orders", orderData);
-      toast.success("Order placed successfully!");
+      
+      if (response.data.reservation) {
+        toast.success(`Order placed successfully! Table ${response.data.reservation.table_number} is reserved for you.`);
+      } else {
+        toast.success("Order placed successfully!");
+      }
+      
       setCartItems([]);
       setShowCheckoutForm(false);
+      localStorage.removeItem("cart");
     } catch (error) {
       console.error("Error placing order:", error);
-      toast.error(error.response?.data?.message || "Failed to place order");
+      if (error.response?.data?.suggestion) {
+        setShowBookingPrompt(true);
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(error.response?.data?.message || "Failed to place order");
+      }
     }
   };
 
@@ -302,6 +319,65 @@ const CartPage = () => {
     toast.error(error);
     setShowStripeForm(false);
   };
+
+  // Add new component for booking prompt
+  const BookingPrompt = () => (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+    >
+      <div className="bg-green-ziti p-6 rounded-xl max-w-md w-full">
+        <h3 className="text-2xl font-bold text-yellow-gold mb-4">Make a Reservation</h3>
+        <p className="text-yellow-gold mb-6">
+          Would you like to make a reservation for your order? This will ensure you have a table ready when you arrive.
+        </p>
+        <div className="flex flex-col gap-4">
+          <Link
+            to="/booking"
+            className="bg-yellow-gold text-green-ziti p-4 rounded-lg text-center text-lg font-medium hover:bg-yellow-gold1 transition-all duration-300"
+          >
+            Make a Reservation
+          </Link>
+          <button
+            onClick={() => {
+              setShowBookingPrompt(false);
+              setCustomerInfo(prev => ({ ...prev, orderType: "delivery" }));
+            }}
+            className="bg-transparent text-yellow-gold border-2 border-yellow-gold p-4 rounded-lg text-center text-lg font-medium hover:bg-yellow-gold hover:text-green-ziti transition-all duration-300"
+          >
+            Continue with Delivery
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+
+  // Update the order type selection in the form
+  const renderOrderTypeSelection = () => (
+    <div className="relative">
+      <label className="block text-yellow-gold mb-2">Order Type</label>
+      <select
+        name="orderType"
+        value={customerInfo.orderType}
+        onChange={handleCustomerInfoChange}
+        className="w-full pl-4 pr-4 py-3 bg-transparent border-2 border-yellow-gold/30 rounded-lg text-yellow-gold focus:outline-none focus:border-yellow-gold"
+      >
+        {activeBooking && (
+          <option value="table">
+            Table {activeBooking.table_number} (Reserved for {new Date(activeBooking.booking_date).toLocaleDateString()})
+          </option>
+        )}
+        <option value="delivery">Home Delivery</option>
+        <option value="pickup">Pickup</option>
+      </select>
+      {activeBooking && customerInfo.orderType === "table" && (
+        <p className="mt-2 text-yellow-gold/80 text-sm">
+          You have a reservation for {activeBooking.number_of_guests} guests
+        </p>
+      )}
+    </div>
+  );
 
   if (!Array.isArray(cartItems)) {
     return <div>Your cart is not properly initialized.</div>;
@@ -552,21 +628,7 @@ const CartPage = () => {
                         </div>
                       </div>
 
-                      <div className="relative">
-                        <label className="block text-yellow-gold mb-2">Order Type</label>
-                        <select
-                          name="orderType"
-                          value={customerInfo.orderType}
-                          onChange={handleCustomerInfoChange}
-                          className="w-full pl-4 pr-4 py-3 bg-transparent border-2 border-yellow-gold/30 rounded-lg text-yellow-gold focus:outline-none focus:border-yellow-gold"
-                        >
-                          {activeBooking && (
-                            <option value="table">Table {activeBooking.tableId}</option>
-                          )}
-                          <option value="delivery">Home Delivery</option>
-                          <option value="pickup">Pickup</option>
-                        </select>
-                      </div>
+                      {renderOrderTypeSelection()}
 
                       {customerInfo.orderType === "delivery" && (
                         <div className="relative md:col-span-2">
@@ -637,6 +699,8 @@ const CartPage = () => {
           </>
         )}
       </div>
+      
+      {showBookingPrompt && <BookingPrompt />}
     </div>
   );
 };
