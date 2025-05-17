@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 09 mai 2025 à 02:05
+-- Généré le : sam. 17 mai 2025 à 02:36
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -131,17 +131,20 @@ CREATE TABLE `customers` (
 -- Déchargement des données de la table `customers`
 --
 
-INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `address`, `reservation_id`, `table_id`) VALUES
-(1, 'Alice Johnson', 'alice.johnson@example.com', '555-1234', '123 Maple Street, Springfield', NULL, NULL),
-(2, 'Bob Smith', 'bob.smith@example.com', '555-5678', '456 Oak Avenue, Metropolis', NULL, NULL),
-(3, 'Clara Davis', 'clara.davis@example.com', '555-8765', '789 Pine Road, Gotham', NULL, NULL),
-(4, 'Daniel Lee', 'daniel.lee@example.com', '555-4321', '321 Birch Blvd, Star City', NULL, NULL),
-(5, 'Emily Clark', 'emily.clark@example.com', '555-6789', '147 Cedar Lane, Central City', NULL, NULL),
-(6, 'Frank Harris', 'frank.harris@example.com', '555-2468', '258 Aspen Drive, Coast City', NULL, NULL),
-(7, 'Grace Kim', 'grace.kim@example.com', '555-1357', '369 Willow Way, Hill Valley', NULL, NULL),
-(8, 'Henry Turner', 'henry.turner@example.com', '555-9753', '741 Elm Court, Riverdale', NULL, NULL),
-(9, 'Isabel Moore', 'isabel.moore@example.com', '555-3141', '852 Cherry Street, Smallville', NULL, NULL),
-(10, 'Jack Miller', 'jack.miller@example.com', '555-2460', '963 Poplar Place, Emerald City', NULL, NULL);
+INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `address`, `reservation_id`, `table_id`, `uuid`) VALUES
+(1, 'Alice Johnson', 'alice.johnson@example.com', '555-1234', '123 Maple Street, Springfield', NULL, NULL, NULL),
+(2, 'Bob Smith', 'bob.smith@example.com', '555-5678', '456 Oak Avenue, Metropolis', NULL, NULL, NULL),
+(3, 'Clara Davis', 'clara.davis@example.com', '555-8765', '789 Pine Road, Gotham', NULL, NULL, NULL),
+(4, 'Daniel Lee', 'daniel.lee@example.com', '555-4321', '321 Birch Blvd, Star City', NULL, NULL, NULL),
+(5, 'Emily Clark', 'emily.clark@example.com', '555-6789', '147 Cedar Lane, Central City', NULL, NULL, NULL),
+(6, 'Frank Harris', 'frank.harris@example.com', '555-2468', '258 Aspen Drive, Coast City', NULL, NULL, NULL),
+(7, 'Grace Kim', 'grace.kim@example.com', '555-1357', '369 Willow Way, Hill Valley', NULL, NULL, NULL),
+(8, 'Henry Turner', 'henry.turner@example.com', '555-9753', '741 Elm Court, Riverdale', NULL, NULL, NULL),
+(9, 'Isabel Moore', 'isabel.moore@example.com', '555-3141', '852 Cherry Street, Smallville', NULL, NULL, NULL),
+(10, 'Jack Miller', 'jack.miller@example.com', '555-2460', '963 Poplar Place, Emerald City', NULL, NULL, NULL),
+(11, 'marwan ganbour', 'ganbourmarwan9@gmail.com', '+212696517130', NULL, NULL, NULL, 'd2e3d497-b92a-40ac-90ed-10c3bcb482a1'),
+(12, 'test2', 'test@gmail.com', '+21269695246', NULL, 15, 1, 'a6c72db6-1b20-44e7-895f-0d1ab5110307'),
+(13, 'marpc', 'marwanganbour12@gmail.com', '+21269695246', '5fBMkuLswG5TqeozYbVYwHXFWLgpmt5FT7PzJu5xMCsL', NULL, NULL, 'e6fe3898-859e-4718-b2e1-587bc886f649');
 
 -- --------------------------------------------------------
 
@@ -224,30 +227,32 @@ CREATE TABLE `orders` (
   `status` varchar(50) DEFAULT 'pending',
   `reservation_id` int(11) DEFAULT NULL,
   `delivery_address` text DEFAULT NULL,
-  `total_price` decimal(10,2) DEFAULT 0.00
+  `total_price` decimal(10,2) DEFAULT 0.00,
+  `customer_uuid` varchar(36) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Déchargement des données de la table `orders`
 --
 
-INSERT INTO `orders` (`id`, `customer_id`, `order_date`, `status`, `reservation_id`, `delivery_address`, `total_price`) VALUES
-(1, 2, '2025-05-01 12:30:00', 'pending', 1, NULL, 150.00),
-(2, 3, '2025-05-01 13:00:00', 'completed', NULL, '123 Main St', 85.50),
-(3, 5, '2025-05-01 14:15:00', 'delivered', NULL, '456 Elm St', 92.00),
-(4, 1, '2025-05-01 15:00:00', 'preparing', 2, NULL, 130.00),
-(5, 4, '2025-05-01 16:00:00', 'canceled', NULL, '789 Oak St', 65.75),
-(6, 2, '2025-05-02 11:30:00', 'completed', NULL, '101 Pine St', 120.00),
-(7, 6, '2025-05-02 13:45:00', 'pending', 3, NULL, 175.00),
-(8, 7, '2025-05-02 14:00:00', 'completed', NULL, '202 Maple Ave', 95.90),
-(9, 8, '2025-05-02 17:00:00', 'delivered', NULL, '303 Cedar Blvd', 110.20),
-(10, 3, '2025-05-03 12:00:00', 'pending', 4, NULL, 88.00),
-(11, 9, '2025-05-03 14:00:00', 'completed', NULL, '404 Birch Rd', 70.00),
-(12, 10, '2025-05-03 15:30:00', 'preparing', 5, NULL, 125.50),
-(13, 1, '2025-05-03 16:45:00', 'pending', NULL, '505 Spruce Ln', 98.30),
-(14, 4, '2025-05-04 10:30:00', 'completed', NULL, '606 Walnut St', 105.60),
-(15, 5, '2025-05-04 13:00:00', 'delivered', NULL, '707 Poplar St', 115.20),
-(42, 1, '2025-05-08 22:54:14', 'Delivered', 2, 'hhhhhhhhhhhhhhh', 80.60);
+INSERT INTO `orders` (`id`, `customer_id`, `order_date`, `status`, `reservation_id`, `delivery_address`, `total_price`, `customer_uuid`) VALUES
+(1, 2, '2025-05-01 12:30:00', 'pending', 1, NULL, 150.00, NULL),
+(2, 3, '2025-05-01 13:00:00', 'completed', NULL, '123 Main St', 85.50, NULL),
+(3, 5, '2025-05-01 14:15:00', 'delivered', NULL, '456 Elm St', 92.00, NULL),
+(4, 1, '2025-05-01 15:00:00', 'preparing', 2, NULL, 130.00, NULL),
+(5, 4, '2025-05-01 16:00:00', 'canceled', NULL, '789 Oak St', 65.75, NULL),
+(6, 2, '2025-05-02 11:30:00', 'completed', NULL, '101 Pine St', 120.00, NULL),
+(7, 6, '2025-05-02 13:45:00', 'pending', 3, NULL, 175.00, NULL),
+(8, 7, '2025-05-02 14:00:00', 'completed', NULL, '202 Maple Ave', 95.90, NULL),
+(9, 8, '2025-05-02 17:00:00', 'delivered', NULL, '303 Cedar Blvd', 110.20, NULL),
+(10, 3, '2025-05-03 12:00:00', 'pending', 4, NULL, 88.00, NULL),
+(11, 9, '2025-05-03 14:00:00', 'completed', NULL, '404 Birch Rd', 70.00, NULL),
+(12, 10, '2025-05-03 15:30:00', 'preparing', 5, NULL, 125.50, NULL),
+(13, 1, '2025-05-03 16:45:00', 'pending', NULL, '505 Spruce Ln', 98.30, NULL),
+(14, 4, '2025-05-04 10:30:00', 'completed', NULL, '606 Walnut St', 105.60, NULL),
+(15, 5, '2025-05-04 13:00:00', 'delivered', NULL, '707 Poplar St', 115.20, NULL),
+(42, 1, '2025-05-08 22:54:14', 'Delivered', 2, 'hhhhhhhhhhhhhhh', 80.60, NULL),
+(43, 11, '2025-05-15 20:38:16', 'pending', NULL, '5fBMkuLswG5TqeozYbVYwHXFWLgpmt5FT7PzJu5xMCsL', 59.99, 'a6c72db6-1b20-44e7-895f-0d1ab5110307');
 
 -- --------------------------------------------------------
 
@@ -287,7 +292,9 @@ INSERT INTO `order_items` (`id`, `order_id`, `meal_id`, `quantity`, `price`) VAL
 (51, 9, 137, 1, NULL),
 (52, 9, 139, 1, NULL),
 (53, 10, 136, 3, NULL),
-(54, 10, 142, 2, NULL);
+(54, 10, 142, 2, NULL),
+(55, 43, 123, 5, 10.00),
+(56, 43, 121, 1, 9.99);
 
 -- --------------------------------------------------------
 
@@ -314,29 +321,31 @@ CREATE TABLE `reservations` (
   `id` int(11) NOT NULL,
   `reservation_time` datetime NOT NULL,
   `number_of_people` int(11) NOT NULL,
-  `table_id` int(11) DEFAULT NULL
+  `table_id` int(11) DEFAULT NULL,
+  `customer_uuid` varchar(36) DEFAULT NULL,
+  `status` varchar(50) DEFAULT 'confirmed'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Déchargement des données de la table `reservations`
 --
 
-INSERT INTO `reservations` (`id`, `reservation_time`, `number_of_people`, `table_id`) VALUES
-(1, '2025-05-05 18:00:00', 2, 1),
-(2, '2025-05-05 19:00:00', 4, 2),
-(3, '2025-05-05 20:00:00', 4, 3),
-(4, '2025-05-06 18:30:00', 6, 4),
-(5, '2025-05-06 19:30:00', 8, 5),
-(6, '2025-05-06 20:30:00', 10, 6),
-(7, '2025-05-07 18:00:00', 2, 1),
-(8, '2025-05-07 19:00:00', 3, 2),
-(9, '2025-05-07 20:00:00', 5, 3),
-(10, '2025-05-08 18:30:00', 6, 4),
-(11, '2025-05-08 19:30:00', 8, 5),
-(12, '2025-05-08 20:30:00', 10, 6),
-(13, '2025-05-09 18:00:00', 2, NULL),
-(14, '2025-05-09 19:00:00', 3, NULL),
-(15, '2025-05-09 20:00:00', 5, NULL);
+INSERT INTO `reservations` (`id`, `reservation_time`, `number_of_people`, `table_id`, `customer_uuid`, `status`) VALUES
+(1, '2025-05-05 18:00:00', 2, 1, NULL, 'confirmed'),
+(2, '2025-05-05 19:00:00', 4, 2, NULL, 'confirmed'),
+(3, '2025-05-05 20:00:00', 4, 3, NULL, 'confirmed'),
+(4, '2025-05-06 18:30:00', 6, 4, NULL, 'confirmed'),
+(5, '2025-05-06 19:30:00', 8, 5, NULL, 'confirmed'),
+(6, '2025-05-06 20:30:00', 10, 6, NULL, 'confirmed'),
+(7, '2025-05-07 18:00:00', 2, 1, NULL, 'confirmed'),
+(8, '2025-05-07 19:00:00', 3, 2, NULL, 'confirmed'),
+(9, '2025-05-07 20:00:00', 5, 3, NULL, 'confirmed'),
+(10, '2025-05-08 18:30:00', 6, 4, NULL, 'confirmed'),
+(11, '2025-05-08 19:30:00', 8, 5, NULL, 'confirmed'),
+(12, '2025-05-08 20:30:00', 10, 6, NULL, 'confirmed'),
+(13, '2025-05-09 18:00:00', 2, NULL, NULL, 'confirmed'),
+(14, '2025-05-09 19:00:00', 3, NULL, NULL, 'confirmed'),
+(15, '2025-05-09 20:00:00', 5, 1, 'a6c72db6-1b20-44e7-895f-0d1ab5110307', 'confirmed');
 
 -- --------------------------------------------------------
 
@@ -398,6 +407,7 @@ ALTER TABLE `chefs`
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `uuid` (`uuid`),
   ADD KEY `reservation_id` (`reservation_id`),
   ADD KEY `table_id` (`table_id`);
 
@@ -421,7 +431,8 @@ ALTER TABLE `meals`
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
   ADD KEY `customer_id` (`customer_id`),
-  ADD KEY `reservation_id` (`reservation_id`);
+  ADD KEY `reservation_id` (`reservation_id`),
+  ADD KEY `fk_orders_customer` (`customer_uuid`);
 
 --
 -- Index pour la table `order_items`
@@ -443,7 +454,8 @@ ALTER TABLE `payments`
 --
 ALTER TABLE `reservations`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `table_id` (`table_id`);
+  ADD KEY `table_id` (`table_id`),
+  ADD KEY `fk_reservations_customer` (`customer_uuid`);
 
 --
 -- Index pour la table `reviews`
@@ -478,7 +490,7 @@ ALTER TABLE `chefs`
 -- AUTO_INCREMENT pour la table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `logs`
@@ -496,13 +508,13 @@ ALTER TABLE `meals`
 -- AUTO_INCREMENT pour la table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT pour la table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT pour la table `payments`
@@ -550,6 +562,7 @@ ALTER TABLE `meals`
 -- Contraintes pour la table `orders`
 --
 ALTER TABLE `orders`
+  ADD CONSTRAINT `fk_orders_customer` FOREIGN KEY (`customer_uuid`) REFERENCES `customers` (`uuid`) ON DELETE CASCADE,
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`reservation_id`) REFERENCES `reservations` (`id`) ON DELETE SET NULL;
 
@@ -570,6 +583,7 @@ ALTER TABLE `payments`
 -- Contraintes pour la table `reservations`
 --
 ALTER TABLE `reservations`
+  ADD CONSTRAINT `fk_reservations_customer` FOREIGN KEY (`customer_uuid`) REFERENCES `customers` (`uuid`) ON DELETE CASCADE,
   ADD CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`table_id`) REFERENCES `tables` (`id`) ON DELETE SET NULL;
 
 --
